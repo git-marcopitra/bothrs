@@ -21,7 +21,7 @@ const Footer: FC = () => {
     <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" bg="BACKGROUND_300">
       <Box
         p="2rem"
-        gap="1rem"
+        gap="0.5rem"
         opacity="0.4"
         display="flex"
         alignItems="center"
@@ -35,7 +35,7 @@ const Footer: FC = () => {
       </Box>
       <Box
         p="2rem"
-        gap="1rem"
+        gap="0.5rem"
         display="flex"
         alignItems="center"
         flexDirection="column"
@@ -49,7 +49,7 @@ const Footer: FC = () => {
       </Box>
       <Box
         p="2rem"
-        gap="1rem"
+        gap="0.5rem"
         display="flex"
         alignItems="center"
         flexDirection="column"

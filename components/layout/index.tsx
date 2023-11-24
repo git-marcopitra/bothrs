@@ -6,11 +6,11 @@ import Footer from '../footer';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => (
   <Box
-    bg="BACKGROUND_300"
     height="100vh"
     display="flex"
-    flexDirection="column"
     overflow="hidden"
+    bg="BACKGROUND_300"
+    flexDirection="column"
   >
     <Box flex="1" overflowY="auto">
       {children}

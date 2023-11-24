@@ -81,9 +81,10 @@ const Home: FC = () => {
             </Typography>
             <Box
               px="3rem"
-              my="1rem"
-              ml="-3.5rem"
+              mt="1rem"
+              pb="1rem"
               gap="1rem"
+              ml="-3.5rem"
               width="100vw"
               display="flex"
               overflowX="scroll"
