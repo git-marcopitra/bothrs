@@ -1,6 +1,7 @@
 export { default as AtomSVG } from './atom';
 export { default as HomeSVG } from './home';
 export { default as LampSVG } from './lamp';
+export { default as PencilSVG } from './pencil';
 export { default as RandomSVG } from './random';
 export { default as SOSBoxSVG } from './sos-box';
 export { default as SpeechBallonSVG } from './speech-ballon';

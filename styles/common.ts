@@ -13,4 +13,7 @@ export const colors = {
   NEUTRAL_100: '#FFFFFF',
   NEUTRAL_200: '#BEBEBE',
   NEUTRAL_300: '#ABABAB',
+  NEUTRAL_400: '#2D2938',
+  ORANGE_100: '#F2994A',
+  RED_100: '#FF5660',
 };
