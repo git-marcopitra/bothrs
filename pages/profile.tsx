@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
 
 import Layout from '@/components/layout';
-import Home from '@/views/home';
+import { Typography } from '@/element';
 
 const HomePage: NextPage = () => (
   <Layout>
-    <Home />
+    <Typography>Profile</Typography>
   </Layout>
 );
 
