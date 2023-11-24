@@ -1,4 +1,4 @@
-# IPX INTERFACE TEMPLATE
+# BOTHRS Webpage
 
 ## Contributing
 
