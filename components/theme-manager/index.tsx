@@ -1,9 +1,4 @@
-import { Global } from '@emotion/react';
-import {
-  darkTheme,
-  lightTheme,
-  ThemeProvider,
-} from '@interest-protocol/ui-kit';
+import { Global, ThemeProvider } from '@emotion/react';
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 
 import { LOCAL_STORAGE_KEYS, LocalStorageKey } from '@/constants';
@@ -32,7 +27,7 @@ const ThemeManager: FC<PropsWithChildren> = ({ children }) => {
     });
 
   return (
-    <ThemeProvider theme={{ ...(dark ? darkTheme : lightTheme), changeTheme }}>
+    <ThemeProvider theme={{ dark, changeTheme }}>
       <Global styles={GlobalStyles} />
       {children}
     </ThemeProvider>
