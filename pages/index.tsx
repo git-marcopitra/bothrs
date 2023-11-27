@@ -1,12 +1,26 @@
 import { NextPage } from 'next';
 
 import Layout from '@/components/layout';
+import { fetchContent } from '@/services/contentful';
 import Home from '@/views/home';
+import { IFeedPosts } from '@/views/home/home.types';
 
-const HomePage: NextPage = () => (
+interface HomePageProps {
+  feedPosts: ReadonlyArray<IFeedPosts>;
+}
+
+const HomePage: NextPage<HomePageProps> = ({ feedPosts }) => (
   <Layout>
-    <Home />
+    <Home posts={feedPosts} />
   </Layout>
 );
+
+export async function getStaticProps() {
+  const feedPosts = await fetchContent('feed');
+
+  return {
+    props: { feedPosts },
+  };
+}
 
 export default HomePage;

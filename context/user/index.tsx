@@ -17,7 +17,7 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/v1/users?id=0')
+    fetch('/api/v1/users?id=0')
       .then((response) => response.json())
       .then(setUser);
   }, []);

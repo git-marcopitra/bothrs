@@ -8,6 +8,4 @@ const userSchema = new mongoose.Schema({
   avatarURL: { type: String, required: false },
 });
 
-const User = mongoose.model('User', userSchema);
-
-export default User;
+export default mongoose.models.User || mongoose.model('User', userSchema);

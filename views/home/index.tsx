@@ -3,13 +3,15 @@ import { FC } from 'react';
 
 import { Card } from '@/components';
 import QuickAction from '@/components/quick-action';
-import { AtomSVG, LampSVG, RandomSVG } from '@/components/svg';
+import { LampSVG, RandomSVG } from '@/components/svg';
 import { useUser } from '@/context/user';
 import { Box, Typography } from '@/element';
 
-import { QUICK_ACTIONS } from './home.data';
+import { QUICK_ACTIONS, QUICK_ACTIONS_MAP } from './home.data';
+import { HomeProps } from './home.types';
+import { getDaysFromNow } from './home.utils';
 
-const Home: FC = () => {
+const Home: FC<HomeProps> = ({ posts }) => {
   const { name } = useUser();
   const { push } = useRouter();
 
@@ -42,169 +44,98 @@ const Home: FC = () => {
         ))}
       </Box>
       <Box mt="1.25rem" display="flex" flexDirection="column" gap="2rem">
-        <Card
-          Icon={LampSVG}
-          title="Tip of the day"
-          iconColor="PRIMARY_300"
-          buttons={[
-            { text: 'See all', action: () => push('/tip') },
-            { text: 'Explore tip', action: () => push('/tip') },
-          ]}
-        >
-          <Box
-            p="2rem"
-            color="NEUTRAL_100"
-            minHeight="12rem"
-            backgroundSize="cover"
-            backgroundImage="url(/img/food.png)"
+        {posts.map((data, index) => (
+          <Card
+            key={index}
+            title={data.fields.title}
+            Icon={QUICK_ACTIONS_MAP[data.fields.type].Icon}
+            iconColor={QUICK_ACTIONS_MAP[data.fields.type].color}
+            buttons={[
+              {
+                text: data.fields.mainButton,
+                action: () => push(data.fields.mainPath),
+              },
+              {
+                text: data.fields.redirectButton,
+                action: () => push(data.fields.redirectPath),
+              },
+            ]}
           >
-            <Typography mb="0.5rem" fontSize="1.25rem" fontWeight="900">
-              Swallowing
-            </Typography>
-            <Typography width="11rem">
-              If you struggle with swallowing, eat soft foods wherever possible.
-              You can check out some of our soft food recipes for ideas here.
-            </Typography>
-          </Box>
-        </Card>
-        <Card
-          Icon={LampSVG}
-          title="Community"
-          iconColor="TERTIARY_100"
-          buttons={[
-            { text: 'See all', action: () => push('/tip') },
-            { text: 'Add topic', action: () => push('/tip') },
-          ]}
-        >
-          <Box p="1.5rem" color="NEUTRAL_100" minHeight="12rem">
-            <Typography mb="0.5rem" fontSize="1.25rem" fontWeight="900">
-              This week’s topics
-            </Typography>
-            <Box
-              px="3rem"
-              mt="1rem"
-              pb="1rem"
-              gap="1rem"
-              ml="-3.5rem"
-              width="100vw"
-              display="flex"
-              overflowX="scroll"
-            >
-              <Box
-                p="1rem"
-                gap="1rem"
-                display="flex"
-                minWidth="20rem"
-                bg="BACKGROUND_100"
-                borderRadius="0.5rem"
-                flexDirection="column"
-              >
-                <Box display="flex" gap="1rem">
-                  <RandomSVG
-                    width="100%"
-                    maxWidth="1.8rem"
-                    maxHeight="1.8rem"
-                  />
-                  <Box>
-                    <Typography fontSize="0.875rem" color="NEUTRAL_200">
-                      posted 2 days ago • Dries Droopy
-                    </Typography>
-                    <Typography fontWeight="700">My MG experience</Typography>
-                  </Box>
-                </Box>
-                <Typography mt="0.7rem">
-                  This is a sharing about my recovery from Myasthenia Gravis
-                  (MG). This disease started initially from my jaw. When I ate
-                  or chew something, I would feel tired soon and then had to
-                  stop chewing because I had no strength to do it...
+            {data.fields.communityPosts?.length ? (
+              <Box p="1.5rem" color="NEUTRAL_100" minHeight="12rem">
+                <Typography mb="0.5rem" fontSize="1.25rem" fontWeight="900">
+                  {data.fields.subtitle}
                 </Typography>
-              </Box>
-              <Box
-                p="1rem"
-                gap="1rem"
-                display="flex"
-                minWidth="20rem"
-                bg="BACKGROUND_100"
-                borderRadius="0.5rem"
-                flexDirection="column"
-              >
-                <Box display="flex" gap="1rem">
-                  <RandomSVG
-                    width="100%"
-                    maxWidth="1.8rem"
-                    maxHeight="1.8rem"
-                  />
-                  <Box>
-                    <Typography fontSize="0.875rem" color="NEUTRAL_200">
-                      posted 2 days ago • Dries Droopy
-                    </Typography>
-                    <Typography fontWeight="700">My MG experience</Typography>
-                  </Box>
+                <Box
+                  px="3rem"
+                  mt="1rem"
+                  pb="1rem"
+                  gap="1rem"
+                  ml="-3.5rem"
+                  width="100vw"
+                  display="flex"
+                  overflowX="scroll"
+                >
+                  {data.fields.communityPosts.map(
+                    (communityPost, postIndex) => (
+                      <Box
+                        p="1rem"
+                        gap="1rem"
+                        key={postIndex}
+                        display="flex"
+                        minWidth="20rem"
+                        bg="BACKGROUND_100"
+                        borderRadius="0.5rem"
+                        flexDirection="column"
+                      >
+                        <Box display="flex" gap="1rem">
+                          <RandomSVG
+                            width="100%"
+                            maxWidth="1.8rem"
+                            maxHeight="1.8rem"
+                          />
+                          <Box>
+                            <Typography fontSize="0.875rem" color="NEUTRAL_200">
+                              {getDaysFromNow(communityPost.fields.postedAt)}
+                              {' days ago '}• {communityPost.fields.postedBy}
+                            </Typography>
+                            <Typography fontWeight="700">
+                              {communityPost.fields.title}
+                            </Typography>
+                          </Box>
+                        </Box>
+                        <Typography
+                          mt="0.7rem"
+                          maxHeight="6rem"
+                          overflow="hidden"
+                          wordWrap="break-word"
+                          textOverflow="ellipsis"
+                        >
+                          {communityPost.fields.content}
+                        </Typography>
+                      </Box>
+                    )
+                  )}
                 </Box>
-                <Typography mt="0.7rem">
-                  This is a sharing about my recovery from Myasthenia Gravis
-                  (MG). This disease started initially from my jaw. When I ate
-                  or chew something, I would feel tired soon and then had to
-                  stop chewing because I had no strength to do it...
-                </Typography>
               </Box>
+            ) : (
               <Box
-                p="1rem"
-                gap="1rem"
-                display="flex"
-                minWidth="20rem"
-                bg="BACKGROUND_100"
-                borderRadius="0.5rem"
-                flexDirection="column"
+                p="2rem"
+                minHeight="12rem"
+                color="NEUTRAL_100"
+                backgroundSize="cover"
+                backgroundImage={`url(${
+                  data.fields.background!.fields.file.url
+                })`}
               >
-                <Box display="flex" gap="1rem">
-                  <RandomSVG
-                    width="100%"
-                    maxWidth="1.8rem"
-                    maxHeight="1.8rem"
-                  />
-                  <Box>
-                    <Typography fontSize="0.875rem" color="NEUTRAL_200">
-                      posted 2 days ago • Dries Droopy
-                    </Typography>
-                    <Typography fontWeight="700">My MG experience</Typography>
-                  </Box>
-                </Box>
-                <Typography mt="0.7rem">
-                  This is a sharing about my recovery from Myasthenia Gravis
-                  (MG). This disease started initially from my jaw. When I ate
-                  or chew something, I would feel tired soon and then had to
-                  stop chewing because I had no strength to do it...
+                <Typography mb="0.5rem" fontSize="1.25rem" fontWeight="900">
+                  {data.fields.subtitle}
                 </Typography>
+                <Typography width="11rem">{data.fields.description}</Typography>
               </Box>
-            </Box>
-          </Box>
-        </Card>
-        <Card
-          Icon={AtomSVG}
-          title="MG Update"
-          iconColor="SECONDARY_200"
-          buttons={[
-            { text: 'See all', action: () => push('/tip') },
-            { text: 'Check update', action: () => push('/tip') },
-          ]}
-        >
-          <Box
-            p="2rem"
-            color="NEUTRAL_100"
-            minHeight="12rem"
-            backgroundSize="cover"
-            backgroundImage="url(/img/food.png)"
-          >
-            <Typography mb="0.5rem" fontSize="1.25rem" fontWeight="900">
-              Swallowing
-            </Typography>
-            <Typography width="11rem">
-              If you struggle with swallowing, eat soft foods wherever possible.
-              You can check out some of our soft food recipes for ideas here.
-            </Typography>
-          </Box>
-        </Card>
+            )}
+          </Card>
+        ))}
       </Box>
     </Box>
   );
