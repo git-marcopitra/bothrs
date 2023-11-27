@@ -4,12 +4,13 @@ import { FC } from 'react';
 import { Card } from '@/components';
 import QuickAction from '@/components/quick-action';
 import { AtomSVG, LampSVG, RandomSVG } from '@/components/svg';
+import { useUser } from '@/context/user';
 import { Box, Typography } from '@/element';
 
 import { QUICK_ACTIONS } from './home.data';
 
 const Home: FC = () => {
-  const name = 'Stef';
+  const { name } = useUser();
   const { push } = useRouter();
 
   return (
@@ -17,7 +18,7 @@ const Home: FC = () => {
       <Box display="flex" justifyContent="space-between">
         <Box mt="0.5rem">
           <Typography as="h2" fontSize="2.125rem" color="NEUTRAL_100">
-            Hi {name}👋
+            Hi {name.split(' ')[0]}👋
           </Typography>
           <Typography
             as="h3"
