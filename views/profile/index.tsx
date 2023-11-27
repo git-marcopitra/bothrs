@@ -82,7 +82,9 @@ const Profile: FC = () => {
         <Typography color="ORANGE_100" fontWeight="700">
           Log out
         </Typography>
-        <Typography color="RED_100">Delete Account</Typography>
+        <Typography color="RED_100" fontWeight="700">
+          Delete Account
+        </Typography>
       </Box>
     </Box>
   );
