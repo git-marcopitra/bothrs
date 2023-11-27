@@ -26,6 +26,10 @@ Initialize the application
   pnpm dev
 ```
 
+### Environment Variables
+
+- Copy `.env.example` text to a new one called `.env.local`
+
 ## Code Style
 
 You must install it in your Editor text
